@@ -19,6 +19,7 @@
             @include('commons.error_messages')
 
             @yield('content')
+            <!--at sectionを参照している-->
         </div>
     </body>
 </html>
