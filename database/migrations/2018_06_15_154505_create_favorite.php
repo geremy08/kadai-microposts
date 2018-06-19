@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMicropostsTable extends Migration
+class CreateFavorite extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,19 @@ class CreateMicropostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('microposts', function (Blueprint $table) {
+        Schema::create('favorite', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('content');
+            $table->integer('micro_id')->unsigned()->index();
             $table->timestamps();
+
+            // Foreign key setting
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('micro_id')->references('id')->on('microposts')->onDelete('cascade');
+
             
-            $table->foreign('user_id')->references('id')->on('users');
-    });
-}
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -30,6 +34,6 @@ class CreateMicropostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('microposts');
+        Schema::dropIfExists('favorite');
     }
 }
